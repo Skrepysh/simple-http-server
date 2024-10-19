@@ -72,6 +72,8 @@ jobs:
       BINARY_EXTENSION: ${{ endsWith(matrix.target, '-msvc') && '.exe' || '' }}
       PATH_BINARY: ${{ github.workspace }}/target/${{ matrix.TARGET }}/release/simple-http-server${{ matrix.EXTENSION }}${{ endsWith(matrix.target, '-msvc') && '.exe' || '' }}
       OPENSSL_STATIC: 1
+      OPENSSL_DIR: /usr/lib/ssl
+      OPENSSLDIR: /usr/lib/ssl
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
