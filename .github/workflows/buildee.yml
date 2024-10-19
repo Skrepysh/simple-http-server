@@ -42,7 +42,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
@@ -72,12 +72,6 @@ jobs:
             target: armv7-unknown-linux-musleabihf
           - os: ubuntu-latest
             target: aarch64-unknown-linux-musl
-          - os: macos-latest
-            target: x86_64-apple-darwin
-          - os: macos-latest
-            target: aarch64-apple-darwin
-          - os: windows-latest
-            target: x86_64-pc-windows-msvc
     env:
       BINARY_EXTENSION: ${{ endsWith(matrix.target, '-msvc') && '.exe' || '' }}
       PATH_BINARY: ${{ github.workspace }}/target/${{ matrix.TARGET }}/release/simple-http-server${{ matrix.EXTENSION }}${{ endsWith(matrix.target, '-msvc') && '.exe' || '' }}
@@ -92,8 +86,6 @@ jobs:
           target: ${{ matrix.target }}
       - if: ${{ matrix.os == 'ubuntu-latest' }}
         run: sudo apt update -y && sudo apt install libssl-dev -y
-      - if: ${{ matrix.os == 'macos-latest' }}
-        run: brew install openssl
       - uses: actions-rs/cargo@v1
         with:
           use-cross: true
